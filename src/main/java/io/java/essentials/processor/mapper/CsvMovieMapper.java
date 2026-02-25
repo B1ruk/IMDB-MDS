@@ -2,10 +2,11 @@ package io.java.essentials.processor.mapper;
 
 import io.java.essentials.model.Movie;
 
+
 public class CsvMovieMapper implements MovieMapper {
     @Override
-    public Movie map(String rawData) {
-        String[] columns = rawData.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+    public Movie map(Object rawData) {
+        String[] columns = ((String) rawData).split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
         return new Movie(
                 columns[0],                          // Poster_Link
                 columns[1],                          // Series_Title
