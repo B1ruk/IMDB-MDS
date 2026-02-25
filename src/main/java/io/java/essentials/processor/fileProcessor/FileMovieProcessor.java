@@ -4,7 +4,6 @@ import io.java.essentials.model.Movie;
 import io.java.essentials.processor.MovieProcessor;
 import io.java.essentials.processor.mapper.MovieMapper;
 
-import java.util.Collections;
 import java.util.List;
 
 public abstract class FileMovieProcessor implements MovieProcessor {
@@ -16,7 +15,5 @@ public abstract class FileMovieProcessor implements MovieProcessor {
     }
 
     @Override
-    public List<Movie> loadMovies() {
-        return Collections.emptyList();
-    }
+    public abstract List<Movie> loadMovies();
 }
