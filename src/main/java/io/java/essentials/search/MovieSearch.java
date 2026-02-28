@@ -20,8 +20,8 @@ public class MovieSearch {
 
         return movies.stream()
                 .filter(movie -> {      //filter by releaseYear
-                    if (Objects.nonNull(searchQuery.getReleaseYear())) {
-                        return movie.releasedYear().equals(searchQuery.getReleaseYear());
+                    if (Objects.nonNull(searchQuery.releaseYear())) {
+                        return movie.releasedYear().equals(searchQuery.releaseYear());
                     }
                     return true;
                 })
@@ -32,9 +32,9 @@ public class MovieSearch {
                 .filter(
                         //filter by rating
                         movie -> {
-                            if (Objects.nonNull(searchQuery.getRating())) {
+                            if (Objects.nonNull(searchQuery.rating())) {
                                 double rating = Double.parseDouble(movie.imdbRating());
-                                return rating>=searchQuery.getRating();
+                                return rating>=searchQuery.rating();
                             }
                             return true;
                         }
@@ -43,12 +43,21 @@ public class MovieSearch {
                 .toList();
     }
 
+    public Optional<Movie> findMovieByTitle(String title)
+    {
+        List<Movie> movies = movieProcessor.loadMovies();
+
+        return movies.stream()
+                .filter(movie -> movie.seriesTitle().equals(title))
+                .findFirst();
+    }
+
     private static Optional<String> matchQueryByGenera(SearchQuery searchQuery, Movie movie) {
-        if (Objects.isNull(searchQuery.getGeneres()) || searchQuery.getGeneres().isEmpty()) {
+        if (Objects.isNull(searchQuery.generes()) || searchQuery.generes().isEmpty()) {
             return Optional.empty();
         }
 
-        Optional<String> matchByGenere = searchQuery.getGeneres()
+        Optional<String> matchByGenere = searchQuery.generes()
                 .stream()
                 .filter(genere -> movie.genre().contains(genere))
                 .findAny();

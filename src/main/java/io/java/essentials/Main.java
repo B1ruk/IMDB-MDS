@@ -28,6 +28,8 @@ public class Main {
         var dramaMovies=movieSearch.searchMovie(dramaQuery);
         var comedyMovies=movieSearch.searchMovie(comedyQuery);
 
+        var movieSearchByTitle=movieSearch.findMovieByTitle("The Shawshank Redemption");
+
         printResult(movieProcessor);
         printResult(movieJsonProcessor);
     }
