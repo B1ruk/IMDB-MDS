@@ -26,14 +26,20 @@ public class JsonMovieProcessor extends FileMovieProcessor {
         Path path = Paths.get(System.getProperty("user.home"), fileName);
 
         try (var reader = Files.newBufferedReader(path)) {
+//            var movieRecords = new Gson().fromJson(reader, ArrayList.class);
+//            List<Movie> movieList = new ArrayList<>();
+//
+//            for (var element : movieRecords) {
+//                var movie = movieMapper.map(element);
+//                movieList.add(movie);
+//            }
+//            return movieList;
             var movieRecords = new Gson().fromJson(reader, ArrayList.class);
-            List<Movie> movieList = new ArrayList<>();
 
-            for (var element : movieRecords) {
-                var movie = movieMapper.map(element);
-                movieList.add(movie);
-            }
-            return movieList;
+            return movieRecords.stream()
+                    .map(element -> movieMapper.map(element))
+                    .toList();
+
 
         } catch (IOException e) {
             throw new RuntimeException("Failed to parse file" + fileName);

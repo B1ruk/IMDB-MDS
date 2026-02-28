@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CsvMovieProcessor extends FileMovieProcessor{
     private String fileName;
@@ -24,15 +25,22 @@ public class CsvMovieProcessor extends FileMovieProcessor{
     public List<Movie> loadMovies() {
         Path path = Paths.get(System.getProperty("user.home"),fileName);
         try {
-            List<Movie> movies = new ArrayList<>();
-            List<String> movieLines = Files.readAllLines(path);
-            for(int i=1;i<movieLines.size();i++) {
-                var line=movieLines.get(i);
-                var movie=movieMapper.map(line);
-                movies.add(movie);
-            }
+            return Files.readAllLines(path)
+                    .stream()
+                    .skip(1)
+                    .map(line -> movieMapper.map(line))
+                    .toList();
 
-            return movies;
+
+//            List<Movie> movies = new ArrayList<>();
+//            List<String> movieLines = Files.readAllLines(path);
+//            for(int i=1;i<movieLines.size();i++) {
+//                var line=movieLines.get(i);
+//                var movie=movieMapper.map(line);
+//                movies.add(movie);
+//            }
+//
+//            return movies;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
