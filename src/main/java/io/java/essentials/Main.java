@@ -1,11 +1,13 @@
 package io.java.essentials;
 
 import io.java.essentials.model.Movie;
+import io.java.essentials.model.SearchQuery;
 import io.java.essentials.processor.MovieProcessor;
 import io.java.essentials.processor.fileProcessor.CsvMovieProcessor;
 import io.java.essentials.processor.fileProcessor.JsonMovieProcessor;
 import io.java.essentials.processor.mapper.CsvMovieMapper;
 import io.java.essentials.processor.mapper.JsonMovieMapper;
+import io.java.essentials.search.MovieSearch;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,14 @@ public class Main {
         MovieProcessor movieProcessor = movieProcessorFactory("imdb_top_1000.csv");
         MovieProcessor movieJsonProcessor = movieProcessorFactory("imdb_top_1000_json_file.json");
 //        MovieProcessor movieXlProcessor = movieProcessorFactory("imdb_top_1000_json_file.xls");
+
+        var movieSearch=new MovieSearch(movieProcessor);
+
+        var dramaQuery=new SearchQuery("2000",7.5,List.of("Drama"));
+        var comedyQuery=new SearchQuery(null,null,List.of("Comedy"));
+
+        var dramaMovies=movieSearch.searchMovie(dramaQuery);
+        var comedyMovies=movieSearch.searchMovie(comedyQuery);
 
         printResult(movieProcessor);
         printResult(movieJsonProcessor);
