@@ -8,6 +8,8 @@ import io.java.essentials.processor.fileProcessor.JsonMovieProcessor;
 import io.java.essentials.processor.mapper.CsvMovieMapper;
 import io.java.essentials.processor.mapper.JsonMovieMapper;
 import io.java.essentials.search.MovieSearch;
+import io.java.essentials.storage.MovieStorage;
+import io.java.essentials.storage.ScheduledMovieStorage;
 
 import java.util.List;
 import java.util.Map;
@@ -29,6 +31,10 @@ public class Main {
         var comedyMovies=movieSearch.searchMovie(comedyQuery);
 
         var movieSearchByTitle=movieSearch.findMovieByTitle("The Shawshank Redemption");
+
+        var movieStorage=new ScheduledMovieStorage();
+
+        movieStorage.pollMovieRecords(movieJsonProcessor);
 
         printResult(movieProcessor);
         printResult(movieJsonProcessor);
